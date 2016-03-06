@@ -18,6 +18,7 @@ class WeatherReport
   def analyze_today_temp
     @report << "Today's temperature is #{@celsius}°C!" if @celsius
     @report << "Today's temperature is #{@fahrenheit}°F!" if @fahrenheit && !@celsius
+    c_to_f if @celsius #if temp is in celsius, also calculate fahrenheit value
   end
 
   # Report hot, warm, or cold
@@ -35,44 +36,26 @@ class WeatherReport
 
   # Convert from celsius to fahrenheit
   def c_to_f
-    @celsius * 1.8 + 32
+    @fahrenheit = @celsius * 1.8 + 32
   end
 
   # returns true if temperature is
   # at least 80 degrees fahrenheit
   def is_hot?
-    if @fahrenheit
-      return @fahrenheit >= 80
-    elsif @celsius
-      return c_to_f >= 80
-    else
-      return false
-    end
+    return @fahrenheit ? @fahrenheit >= 80 : false
   end
 
   # returns true if temperature is
   # less than 80 degrees fahrenheit and
   # at least 60 degrees fahrenheit
   def is_warm?
-    if @fahrenheit
-      return @fahrenheit < 80 && @fahrenheit >= 60
-    elsif @celsius
-      return c_to_f < 80 && c_to_f >= 60
-    else
-      return false
-    end
+    return @fahrenheit ? @fahrenheit < 80 && @fahrenheit >= 60 : false
   end
 
   # returns true if the temperature is
   # less than 60 degrees fahrenheit
   def is_cold?
-    if @fahrenheit
-      return @fahrenheit < 60
-    elsif @celsius
-      return c_to_f < 60
-    else
-      return false
-    end
+    return @fahrenheit ? @fahrenheit < 60 : false
   end
 
 end
